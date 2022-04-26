@@ -1,8 +1,8 @@
 import { Schema, model, connect } from 'mongoose';
 
-import IUser from "../interfaces/User"
+import INewUser from "../interfaces/NewUser"
 
-const userSchema = new Schema<IUser>({
+const newUserSchema = new Schema<INewUser>({
     username: { type: String, required: true },
     address: { type: String, required: true },
     phone: { type: Number, required: true },
@@ -11,4 +11,4 @@ const userSchema = new Schema<IUser>({
 }, { timestamps: true })
 
 
-export default model<IUser>('User', userSchema); 
+export default model<INewUser>('NewUser', newUserSchema); 
