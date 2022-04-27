@@ -84,7 +84,7 @@ export const Login = () => {
 const Body = styled.div`
   width: 100%;
   height: 80vh;
-  padding-top: 15rem;
+  padding-top: 20vh;
   /* background-color: white; */
   background-image: linear-gradient(to right, #4c8fd2, #eb6feb);
 `;
