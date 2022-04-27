@@ -1,23 +1,26 @@
 import { Router,Request,Response } from "express";
 import User from "../models/User";
-import ShopingCard from "../models/ShopingCard"
+import ShopingCart from "../models/ShopingCart"
 import bcrypt from "bcrypt";
 import { checkUserPassword } from "../helpers/validatePassword";
 import { checkUser } from "../helpers/checkUser";
 import IUser from "../interfaces/User"
 const router = Router();
 
-router.post('/CreateNewOrder', async (req:Request, res:Response) => {
+router.post('/NewOrder', async (req:Request, res:Response) => {
     try {
-        const { emailUser, id_Prodact, countPiece } = req.body;
+        const { emailUser, id_Prodact, count } = req.body;
         let user = await User.findOne({email : emailUser})
-        let id_user=user._id;
-        if(id_user)
+        let id_user=user?._id;
+        let findUserCart=await ShopingCart.findOne({idUser:id_user});
+        if(findUserCart)
         {
-//כאן אני מוסיף למערך
+               await ShopingCart.findOneAndUpdate({listShopingUser:[...findUserCart.listShopingUser,{product_id: id_Prodact ,count}]})
+               res.send({success:true,message:'Done successfully'})  
         }
         else {
-            ShopingCard.create({idUser:id_user,product:id_Prodact,countPiece:countPiece});
+            await ShopingCart.create({idUser:id_user,listShopingUser:[{product_id: id_Prodact ,count}]})
+            res.send({success:true,message:'creat successfully'})
         }
        
     } catch (err) {
@@ -29,11 +32,11 @@ router.post('/OrderUser', async (req:Request, res:Response) => {
     try {
         const { emailUser } = req.body;
         let user = await User.findOne({email : emailUser})
-        let id_user=user._id;
-        let findOrderUSer_id=await ShopingCard.findOne({idUser : id_user})
+        let id_user=user?._id;
+        let findOrderUSer_id=await ShopingCart.findOne({idUser : id_user})
         if(findOrderUSer_id)
         {
-            //מחזיר את המערך
+            res.send({success:true,data:findOrderUSer_id.listShopingUser,message:'found order'})
         }
         else {
             res.send({success: false, message: "There are no Order" })
