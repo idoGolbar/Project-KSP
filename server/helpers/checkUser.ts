@@ -1,11 +1,6 @@
 import User from "../models/User";
 
-interface Message {
-    success: boolean;
-    message: string;
-}
-
-export const checkUser = async (findUser: string, findPhone: number, findMail: string): Promise<Message => {
+export const checkUser = async (findUser: string, findPhone: number, findMail: string)=> {
     let user = await User.findOne({ username: findUser });
     let phone = await User.findOne({ phone: findPhone });
     let mail = await User.findOne({ mail: findMail });
