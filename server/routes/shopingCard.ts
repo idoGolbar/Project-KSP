@@ -15,7 +15,7 @@ router.post('/NewOrder', async (req:Request, res:Response) => {
         let findUserCart=await ShopingCart.findOne({idUser:id_user});
         if(findUserCart)
         {
-               await ShopingCart.findOneAndUpdate({listShopingUser:[...findUserCart.listShopingUser,{product_id: id_Prodact ,count}]})
+               await ShopingCart.findOneAndUpdate({listShopingUser:[,{product_id: id_Prodact ,count},...findUserCart.listShopingUser]})
                res.send({success:true,message:'Done successfully'})  
         }
         else {

@@ -5,7 +5,7 @@ import IFavoriteProduct from '../interfaces/FavoriteProduct';
 
 const FavoriteProductSchema = new Schema<IFavoriteProduct>({
     user_id: { SchemaDefinitionProperty: Types.ObjectId, required: true },
-    products_ids: [{ type: Types.ObjectId, required: true }],
+    products_ids: { type:Schema.Types.Array, required: true },
 }, { timestamps: true })
 
 
