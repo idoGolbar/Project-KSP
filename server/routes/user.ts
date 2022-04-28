@@ -32,7 +32,7 @@ router.post('/CreateNewUser', async (req:Request, res:Response) => {
             if (result.success) {
                 let hashPassword=bcrypt.hashSync(password,saltRounds);
                 await User.create({
-                    username, address, phone, mail, password:hashPassword
+                    username, address, phone, mail, password:hashPassword,role:"user"
                 })
             }
             else {
