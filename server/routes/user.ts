@@ -7,6 +7,7 @@ import { checkUser } from "../helpers/checkUser";
 
 
 const router = Router();
+const saltRounds = 10;
 
 router.post('/login', async (req:Request, res:Response) => {
     try {
@@ -29,8 +30,9 @@ router.post('/CreateNewUser', async (req:Request, res:Response) => {
         const { username, address, phone, mail, password } = req.body;
         checkUser(username, phone, mail).then(async(result) => {
             if (result.success) {
+                let hashPassword=bcrypt.hashSync(password,saltRounds);
                 await User.create({
-                    username, address, phone, mail, password
+                    username, address, phone, mail, password:hashPassword
                 })
             }
             else {
