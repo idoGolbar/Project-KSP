@@ -1,118 +1,107 @@
-import { useState } from "react"
-import styled from "styled-components"
-import LogoNavBar from '../../Png/logoNavBar.png'
+import { useState } from "react";
+import styled from "styled-components";
+import LogoNavBar from "../../Png/logoNavBar.png";
 import { ProductTab } from "../ProductTab";
 import { SearchNav } from "../SearchNav";
 
-
 export const NavBar = () => {
-    enum NameType {
-        nameProject = 'Digital Store'
-    }
-    const [openNav, setOpenNav] = useState(false);
-    return (
+  enum NameType {
+    nameProject = "Digital Store",
+  }
+  const [openNav, setOpenNav] = useState(false);
+  return (
+    <div>
+      <DackgroundNavBar>
+        <DivNAv>
+          <div>
+            <ImgDiv src={LogoNavBar}></ImgDiv>
+          </div>
+          <NamNav>{NameType.nameProject}</NamNav>
+          <div>
+            <StyledBurger open={openNav} onClick={() => setOpenNav(!openNav)}>
+              <div />
+              <div />
+              <div />
+            </StyledBurger>
+          </div>
+        </DivNAv>
         <div>
-            <DackgroundNavBar>
-                <DivNAv>
-                    <div>
-                        <ImgDiv src={LogoNavBar}></ImgDiv>
-                    </div>
-                    <NamNav>
-                        {NameType.nameProject}
-                    </NamNav>
-                    <div>
-                        <StyledBurger open={openNav} onClick={() => setOpenNav(!openNav)}>
-                            <div />
-                            <div />
-                            <div />
-                        </StyledBurger>
-                    </div>
-                </DivNAv>
-                <div>
-                    <SearchNav />
-                </div>
-            </DackgroundNavBar>
-
-            {/* סתם בשבילי אחרי זה נמחק */}
-            <Diva>
-                <ProductTab />
-                <ProductTab />
-            </Diva>
-            <Diva>
-                <ProductTab />
-                <ProductTab />
-            </Diva>
-
-            <StyledMenu open={openNav}>
-                <a href="/">
-                    <span role="img" aria-label="about us">💁🏻‍♂️</span>
-                    About us
-                </a>
-                <a href="/">
-                    <span role="img" aria-label="price">💸</span>
-                    Pricing
-                </a>
-                <a href="/">
-                    <span role="img" aria-label="contact">📩</span>
-                    Contact
-                </a>
-            </StyledMenu>
+          <SearchNav />
         </div>
-    )
-}
+      </DackgroundNavBar>
 
-const Diva = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 98%;
-    margin: 0 auto;
-    margin-bottom: 1rem;
+      <StyledMenu open={openNav}>
+        <a href="/">
+          <span role="img" aria-label="about us">
+            💁🏻‍♂️
+          </span>
+          About us
+        </a>
+        <a href="/">
+          <span role="img" aria-label="price">
+            💸
+          </span>
+          Pricing
+        </a>
+        <a href="/">
+          <span role="img" aria-label="contact">
+            📩
+          </span>
+          Contact
+        </a>
+      </StyledMenu>
+    </div>
+  );
+};
 
-`
 const DackgroundNavBar = styled.div`
-    display: flex;
-    flex-direction: column;
-    background-color:#d9e1ee;
-    height: 20vh;
-    border-bottom-left-radius:15px ;
-    border-bottom-right-radius:15px ;
-    margin-bottom: 1rem;
-    
-` ;
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #d9e1ee;
+  height: 20vh;
+  width: 100%;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin-bottom: 1rem;
+
+  @media screen and (max-height: 730px) {
+    height: 25vh;
+  }
+`;
 
 const NamNav = styled.div`
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size:1.5rem;
-`
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+`;
 
 const ImgDiv = styled.img`
-
-display: flex;
-height: 5rem;
-align-items:center;
-justify-content:center;
-`
+  display: flex;
+  height: 5rem;
+  align-items: center;
+  justify-content: center;
+`;
 const DivNAv = styled.div`
-display: flex;
-flex-direction: row-reverse;
-align-items: center;
-justify-content:space-between;
-width: 95%;
-margin: 0 auto;
-padding-top: 5%;
-height: 4rem;
-`
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  height: 4rem;
+`;
 
 const StyledMenu = styled.nav<{ open: boolean }>`
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   background: #d9e1ee;
-  transform: ${(props) => props.open ? 'translateX(0)' : 'translateX(-100%)'};
+  transform: ${(props) => (props.open ? "translateX(0)" : "translateX(-100%)")};
   height: 86%;
   text-align: left;
   padding: 2rem;
@@ -127,13 +116,13 @@ const StyledMenu = styled.nav<{ open: boolean }>`
     } */
 
   a {
-      display: flex;
+    display: flex;
     font-size: 2rem;
     text-transform: uppercase;
     padding: 2rem 0;
     font-weight: bold;
     letter-spacing: 0.5rem;
-    color: #0D0C1D;
+    color: #0d0c1d;
     text-decoration: none;
     transition: color 0.3s linear;
 
@@ -146,7 +135,7 @@ const StyledMenu = styled.nav<{ open: boolean }>`
       color: #343078;
     }
   }
-`
+`;
 
 const StyledBurger = styled.button<{ open: boolean }>`
   position: relative;
@@ -170,79 +159,29 @@ const StyledBurger = styled.button<{ open: boolean }>`
   div {
     width: 2rem;
     height: 0.25rem;
-    background: ${({ open }) => open ? '#0D0C1D' : '#489ce6'};
+    background: ${({ open }) => (open ? "#0D0C1D" : "#489ce6")};
     border-radius: 10px;
     transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;
 
     :first-child {
-      transform: ${({ open }) => open ? 'rotate(45deg)' : 'rotate(0)'};
+      transform: ${({ open }) => (open ? "rotate(45deg)" : "rotate(0)")};
     }
 
     :nth-child(2) {
-      opacity: ${({ open }) => open ? '0' : '1'};
-      transform: ${({ open }) => open ? 'translateX(20px)' : 'translateX(0)'};
+      opacity: ${({ open }) => (open ? "0" : "1")};
+      transform: ${({ open }) => (open ? "translateX(20px)" : "translateX(0)")};
     }
 
     :nth-child(3) {
-      transform: ${({ open }) => open ? 'rotate(-45deg)' : 'rotate(0)'};
+      transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
     }
   }
-`
+`;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <DivNavBar>
+{
+  /* <DivNavBar>
             <NavbarContainer id='container'>
                 <div id="hamburger-lines">
                     <span id="line line1"></span>
@@ -288,4 +227,5 @@ position: relative;
   height: 64px;
   align-items: center;
     height: 64px;
-` */}
+` */
+}

@@ -4,11 +4,12 @@ import "./App.css";
 import { Login } from "./Componnets/Login";
 import { CreateNewUser } from "./Componnets/CreateNewUser";
 import { NavBar } from "./Componnets/NavBar";
+import { Exsmpel } from "./Componnets/Exsmpel";
 
 function App() {
   return (
     <div>
-      <NavBar />
+      <Exsmpel />
     </div>
   );
 }
