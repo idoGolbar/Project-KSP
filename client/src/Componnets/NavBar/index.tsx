@@ -9,6 +9,7 @@ export const NavBar = () => {
     nameProject = "Digital Store",
   }
   const [openNav, setOpenNav] = useState(false);
+  const [showCountOrder, setShowCountOrder] = useState(false);
   return (
     <div>
       <DackgroundNavBar>
@@ -18,6 +19,10 @@ export const NavBar = () => {
           </div>
           <NamNav>{NameType.nameProject}</NamNav>
           <div>
+            {showCountOrder && <CountOrders showCountOrder={showCountOrder}>
+              <div id='color'></div>
+              <div id='number'>10</div>
+            </CountOrders>}
             <StyledBurger open={openNav} onClick={() => setOpenNav(!openNav)}>
               <div />
               <div />
@@ -53,6 +58,42 @@ export const NavBar = () => {
     </div>
   );
 };
+
+const CountOrders = styled.div<{ showCountOrder: boolean }>`
+display: relative;
+position: absolute;
+width: 2rem;
+height: 2rem;
+top: 1rem;
+right: 85%;
+z-index:2;
+
+#number{
+  display: relative;
+position: absolute;
+width: 2rem;
+z-index:-1;
+height: 2rem;
+top: 0.5rem;
+right: -20%;
+font-size:1rem;
+/* right: 10rem; */
+}
+
+#color{
+  display: relative;
+position: absolute;
+  align-items: center;
+justify-content:center;
+width: 2rem;
+z-index:-1;
+height: 2rem;
+top: 0.1rem;
+border-radius: 50%;
+background-color:${(props) => props.showCountOrder ? 'red' : '#d9e1ee'} ;
+transition: all 0.3s ease-in-out;
+}
+`
 
 const DackgroundNavBar = styled.div`
   position: fixed;
@@ -102,11 +143,12 @@ const StyledMenu = styled.nav<{ open: boolean }>`
   /* justify-content: center; */
   background: #d9e1ee;
   transform: ${(props) => (props.open ? "translateX(0)" : "translateX(-100%)")};
-  height: 86%;
+  height: 100%;
+  width: 70%;
   text-align: left;
   padding: 2rem;
-  position: absolute;
-  top: 10%;
+  position: fixed;
+  top: 6rem;
   left: 0;
   opacity: 0.9;
   transition: transform 0.3s ease-in-out;
@@ -142,6 +184,7 @@ const StyledBurger = styled.button<{ open: boolean }>`
   /* top: 5%; */
   /* left: 2rem; */
   display: flex;
+  z-index:-1;
   flex-direction: column;
   justify-content: space-around;
   width: 4.5rem;
@@ -150,7 +193,7 @@ const StyledBurger = styled.button<{ open: boolean }>`
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10;
+  z-index: 1;
 
   &:focus {
     outline: none;

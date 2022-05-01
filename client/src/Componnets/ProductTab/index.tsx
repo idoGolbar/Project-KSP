@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import Iphone13 from "../../Png/iphone13.png";
+import Iphone13 from "../../Png/iphone-13.jpeg";
+import ApleLogo from "../../Png/apleLogo.jpeg";
+
 import { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { VscSettingsGear } from "react-icons/vsc";
@@ -12,11 +14,15 @@ export const ProductTab = () => {
       <Body>
         <Hader>
           <HaderLeft>
-            <MdDeleteOutline />
+            {/* <ApleLogo /> */}
+            {/* <MdDeleteOutline /> */}
           </HaderLeft>
           <HaderRight>
             <div id="name">iphone 13</div>
-            <div id="mkt"> Mkt 12345678877</div>
+            <div id="mkt">
+              <div>MAKT</div>
+              <div>12344569</div>
+            </div>
           </HaderRight>
         </Hader>
         <Contents>
@@ -28,7 +34,7 @@ export const ProductTab = () => {
         </Contents>
         <DivMoney>
           <DivMoneyLeft>
-            <VscSettingsGear />
+            {/* <VscSettingsGear /> */}
           </DivMoneyLeft>
           <DivMoneyRight>
             <div id="OriginalMoney">40.00$</div>
@@ -50,9 +56,10 @@ export const ProductTab = () => {
 const FooterIcon = styled.div`
   display: flex;
   width: 16%;
+  height: 60%;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem;
+  font-size: 2rem;
 `;
 const FooterBuy = styled.div`
   display: flex;
@@ -62,7 +69,7 @@ const FooterBuy = styled.div`
   font-size: 1.2rem;
   background-color: #325ec4;
   color: white;
-  height: 100%;
+  height: 60%;
   margin-right: 2px;
 `;
 const FooterAdd = styled.div`
@@ -73,7 +80,7 @@ const FooterAdd = styled.div`
   font-size: 1rem;
   background-color: #51b031;
   color: white;
-  height: 100%;
+  height: 60%;
   margin-right: 14px;
   /* border-bottom-right-radius: 9px; */
 `;
@@ -96,17 +103,18 @@ const Footer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   height: 4rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 `;
 
 const DivMoney = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
   width: 100%;
-  height: 3rem;
+  height: 4.5rem;
   padding-top: 0.2rem;
 `;
 
@@ -136,13 +144,13 @@ const Body = styled.div`
   /* box-shadow: 0px 10px 20px 20px #d9e1ee; */
   width: 95%;
   margin: 0 auto;
-  height: 28.4vh;
+  height: 35.4vh;
   margin-bottom: 1rem;
   @media screen and (max-height: 750px) {
-    height: 41.3vh;
+    height: 45.3vh;
   }
   @media screen and (min-height: 1000px) {
-    height: 25vh;
+    height: 32vh;
   }
   /* @media screen and (min-height: 900px) {
     height: 28vh;
@@ -166,8 +174,12 @@ const HaderRight = styled.div`
     font-size: 1.5rem;
     width: 70%;
     text-align: center;
+    font-weight: bold;
   }
   #mkt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 0.6rem;
     width: 30%;
   }
@@ -196,14 +208,15 @@ const ContentsRight = styled.img`
 const ContentsLeft = styled.div`
   width: 50%;
   font-size: 1.1rem;
-  height: 100%;
+  height: 90%;
+  padding-left: 0.5rem;
   /* white-space: nowrap; */
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 0.5rem;
   display: -webkit-box;
   -webkit-line-clamp: 4; /* number of lines to show */
-  /* line-clamp: 4; */
+  line-clamp: 4;
   -webkit-box-orient: vertical;
 `;
 
