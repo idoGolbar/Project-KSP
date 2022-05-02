@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FiUserPlus } from "react-icons/fi";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsShieldLock } from "react-icons/bs";
+import axios from "axios";
 
 export const CreateNewUser = () => {
   const [errorText, setErrorText] = useState(false);
@@ -13,6 +14,20 @@ export const CreateNewUser = () => {
     mile: "",
     password: "",
   });
+
+  const registerUser = () => {
+    const { fullName, address, phoneNumber, mile, password } = objForm;
+
+    axios.post("http://localhost:3001/api/user/CreateNewUser", {
+      username: fullName, password: password,
+      address: address, phone: phoneNumber, email: mile
+    }).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
   return (
     <Body dir="rtl">
       <DivBorder>
@@ -80,7 +95,7 @@ export const CreateNewUser = () => {
           </DivInpute>
         </Contend>
         <FooterButton>
-          <ButtonClick>הרשם</ButtonClick>
+          <ButtonClick onClick={registerUser}>הרשם</ButtonClick>
           {errorText && <ErrorText>שגיאה</ErrorText>}
         </FooterButton>
       </DivBorder>

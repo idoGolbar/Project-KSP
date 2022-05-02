@@ -3,12 +3,25 @@ import styled from "styled-components";
 import { GiCyborgFace } from "react-icons/gi";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsShieldLock } from "react-icons/bs";
+import axios from "axios";
 export const Login = () => {
+
   const [userName, setUserName] = useState("");
   const [userPassworde, setUserPassworde] = useState("");
   const [erroeName, setErroeName] = useState(false);
   const [erroePassworde, setPassworde] = useState(false);
   const [erroeText, setErroeText] = useState(false);
+
+
+  const loginUser = () => {
+    axios.post('http://localhost:3001/api/user/login', { username: userName, password: userPassworde })
+      .then(response => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      })
+  }
+
   return (
     <Body dir="rtl">
       <DivBorder>
@@ -68,7 +81,7 @@ export const Login = () => {
                 return;
               }
               if (userName !== "" && userPassworde !== "")
-                console.log("נכנסתי");
+                loginUser()
             }}
           >
             כניסה
