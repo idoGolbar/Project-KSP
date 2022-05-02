@@ -33,9 +33,7 @@ export const ProductTab = () => {
           <ContentsRight src={Iphone13}></ContentsRight>
         </Contents>
         <DivMoney>
-          <DivMoneyLeft>
-            {/* <VscSettingsGear /> */}
-          </DivMoneyLeft>
+          <DivMoneyLeft>{/* <VscSettingsGear /> */}</DivMoneyLeft>
           <DivMoneyRight>
             <div id="OriginalMoney">40.00$</div>
             <div>60.00$</div>
