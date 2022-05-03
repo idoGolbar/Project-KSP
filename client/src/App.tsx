@@ -12,6 +12,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />}></Route>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/createNewUser" element={<CreateNewUser />}></Route>
         <Route path="/Exsmpel" element={<Exsmpel />}></Route>
         {/* <Route path="/Exsmpel/:id" element={<Exsmpel />}></Route> */}

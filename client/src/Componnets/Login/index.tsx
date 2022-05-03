@@ -4,8 +4,10 @@ import { GiCyborgFace } from "react-icons/gi";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsShieldLock } from "react-icons/bs";
 import axios from "axios";
+import { useNavigate } from "react-router";
 export const Login = () => {
-
+  const navigate = useNavigate();
+  const [massageBakend, setMassageBakend] = useState('');
   const [userName, setUserName] = useState("");
   const [userPassworde, setUserPassworde] = useState("");
   const [erroeName, setErroeName] = useState(false);
@@ -16,6 +18,7 @@ export const Login = () => {
   const loginUser = () => {
     axios.post('http://localhost:3001/api/user/login', { username: userName, password: userPassworde })
       .then(response => {
+        setMassageBakend(response.data.message)
         console.log(response);
       }).catch((error) => {
         console.log(error);
@@ -42,6 +45,7 @@ export const Login = () => {
               type="text"
               value={userName}
               onChange={(e) => {
+                setMassageBakend('')
                 setErroeText(false);
                 setUserName(e.target.value);
                 setErroeName(false);
@@ -58,6 +62,7 @@ export const Login = () => {
               type="password"
               value={userPassworde}
               onChange={(e) => {
+                setMassageBakend('')
                 setErroeText(false);
                 setUserPassworde(e.target.value);
                 setPassworde(false);
@@ -67,7 +72,7 @@ export const Login = () => {
         </Content>
 
         <DivFotterButton>
-          <div id="newUserClik">הרשמות מחדש</div>
+          <div id="newUserClik" onClick={() => navigate('/createNewUser')}>הרשמות מחדש</div>
           <div
             id="buttonClik"
             onClick={() => {
@@ -87,8 +92,10 @@ export const Login = () => {
             כניסה
           </div>
         </DivFotterButton>
-
-        {erroeText && <TextError>שגיאה</TextError>}
+        {erroeText ?
+          <TextError>יש למלא את כל השדות</TextError>
+          :
+          <TextError>{massageBakend}</TextError>}
       </DivBorder>
     </Body>
   );

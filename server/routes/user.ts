@@ -4,7 +4,7 @@ import User from "../models/User";
 import bcrypt from "bcrypt";
 import { checkUserPassword } from "../helpers/validatePassword";
 import { checkUser } from "../helpers/checkUser";
-import {emailValidation} from '../helpers/emailValidation';
+import {ValidationEmailPhone} from '../helpers/ValidationEmailPhone';
 
 
 const router = Router();
@@ -29,7 +29,7 @@ router.post('/login', async (req: Request, res: Response) => {
 router.post('/CreateNewUser', async (req: Request, res: Response) => {
     try { 
         const { username, address, phone, email, password } = req.body;
-       if( emailValidation(email)){
+       if( ValidationEmailPhone(email)){
         checkUser(username, phone, email).then(async (result) => {
             if (result.success) {
                 let hashPassword = bcrypt.hashSync(password, saltRounds);

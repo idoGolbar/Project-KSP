@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { FiUserPlus } from "react-icons/fi";
 import { HiOutlineUserCircle } from "react-icons/hi";
@@ -13,6 +14,7 @@ export const CreateNewUser = () => {
   const [errorPhone, setErrorPhone] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
+  const navigate = useNavigate();
   const [objForm, setObjForm] = useState({
     fullName: "",
     address: "",
@@ -25,22 +27,29 @@ export const CreateNewUser = () => {
     const { fullName, address, phoneNumber, email, password } = objForm;
     if (fullName == "") {
       setErrorName(true)
+      setErrorText(true);
       return
     }
     else if (address == "") {
       setErrorAddress(true)
+      setErrorText(true);
+      setErrorText(true);
       return
     }
     else if (phoneNumber == "") {
       setErrorPhone(true)
+      setErrorText(true);
       return
     }
     else if (email == '') {
       setErrorEmail(true)
+
+      setErrorText(true);
       return
     }
     else if (password == "") {
       setErrorPassword(true)
+      setErrorText(true);
       return
     }
     axios.post("http://localhost:3001/api/user/CreateNewUser", {
@@ -48,7 +57,9 @@ export const CreateNewUser = () => {
       address: address, phone: phoneNumber, email: email
     }).then((response) => {
       setMassageBakend(response.data.message)
-      console.log(response.data.message);
+      if (response.data.message === 'complitely') {
+        navigate('/login')
+      }
     }).catch((error) => {
       console.log(error);
     })
@@ -70,6 +81,7 @@ export const CreateNewUser = () => {
               placeholder="שם מלא"
               value={objForm.fullName}
               onChange={(e) => {
+                setErrorText(false);
                 setMassageBakend('')
 
                 setErrorName(false)
@@ -82,6 +94,7 @@ export const CreateNewUser = () => {
               placeholder="כתובת"
               value={objForm.address}
               onChange={(e) => {
+                setErrorText(false);
                 setMassageBakend('')
                 setErrorAddress(false)
                 setObjForm({ ...objForm, address: e.target.value });
@@ -92,10 +105,11 @@ export const CreateNewUser = () => {
           <DivInpute>
             <InputPhoneNumber
               errorPhone={errorPhone}
-              type="number"
+              type="tel"
               placeholder="מספר טלפון"
               value={objForm.phoneNumber}
               onChange={(e) => {
+                setErrorText(false);
                 setMassageBakend('')
                 setErrorPhone(false)
                 setObjForm({ ...objForm, phoneNumber: e.target.value });
@@ -107,6 +121,7 @@ export const CreateNewUser = () => {
               placeholder="סיסמא"
               value={objForm.password}
               onChange={(e) => {
+                setErrorText(false);
                 setMassageBakend('')
                 setErrorPassword(false)
                 setObjForm({ ...objForm, password: e.target.value });
@@ -123,6 +138,7 @@ export const CreateNewUser = () => {
             placeholder="מייל"
             value={objForm.email}
             onChange={(e) => {
+              setErrorText(false);
               setMassageBakend('')
               setErrorEmail(false)
               setObjForm({ ...objForm, email: e.target.value });
@@ -132,8 +148,8 @@ export const CreateNewUser = () => {
         </Contend>
         <FooterButton>
           <ButtonClick onClick={registerUser}>הרשם</ButtonClick>
-          <ErrorText>{massageBakend}</ErrorText>
-          {/* {errorText && <ErrorText>שגיאה</ErrorText>} */}
+
+          {errorText ? <ErrorText>שגיאה</ErrorText> : <ErrorText>{massageBakend}</ErrorText>}
         </FooterButton>
       </DivBorder>
     </Body>
@@ -245,11 +261,7 @@ const InputPassword = styled.input<{ errorPassword: boolean }>`
   border-radius: 15px;
   padding-right: 0.5rem;
   border:${(props) => props.errorPassword ? ' 1px solid red' : ''};
-  }
 `;
-
-
-
 const DivInpute = styled.div`
   display: flex;
   flex-direction: row;
