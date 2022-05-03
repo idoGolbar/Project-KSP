@@ -4,6 +4,7 @@ import User from "../models/User";
 import bcrypt from "bcrypt";
 import { checkUserPassword } from "../helpers/validatePassword";
 import { checkUser } from "../helpers/checkUser";
+import {emailValidation} from '../helpers/emailValidation';
 
 
 const router = Router();
@@ -26,24 +27,25 @@ router.post('/login', async (req: Request, res: Response) => {
 
 
 router.post('/CreateNewUser', async (req: Request, res: Response) => {
-    try {
+    try { 
         const { username, address, phone, email, password } = req.body;
-        console.log(req.body);
-
+       if( emailValidation(email)){
         checkUser(username, phone, email).then(async (result) => {
             if (result.success) {
                 let hashPassword = bcrypt.hashSync(password, saltRounds);
                 await User.create({
                     username, address, phone, email, password: hashPassword, role: "user"
                 })
+                res.send({ message: 'complitely'})
             }
             else {
                 res.send({ message: result.message })
             }
         });
+       }else{
+        res.send({ message: 'You have entered an invalid email address!' })
+       }
     } catch (err) {
-        console.log('elsee');
-
         res.json({ success: false, message: "Something went wrong" }).status(500);
     }
 });

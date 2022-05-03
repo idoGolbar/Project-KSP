@@ -6,23 +6,49 @@ import { BsShieldLock } from "react-icons/bs";
 import axios from "axios";
 
 export const CreateNewUser = () => {
+  const [massageBakend, setMassageBakend] = useState('')
   const [errorText, setErrorText] = useState(false);
+  const [errorName, setErrorName] = useState(false);
+  const [errorAddress, setErrorAddress] = useState(false);
+  const [errorPhone, setErrorPhone] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
   const [objForm, setObjForm] = useState({
     fullName: "",
     address: "",
     phoneNumber: "",
-    mile: "",
+    email: "",
     password: "",
   });
 
   const registerUser = () => {
-    const { fullName, address, phoneNumber, mile, password } = objForm;
-
+    const { fullName, address, phoneNumber, email, password } = objForm;
+    if (fullName == "") {
+      setErrorName(true)
+      return
+    }
+    else if (address == "") {
+      setErrorAddress(true)
+      return
+    }
+    else if (phoneNumber == "") {
+      setErrorPhone(true)
+      return
+    }
+    else if (email == '') {
+      setErrorEmail(true)
+      return
+    }
+    else if (password == "") {
+      setErrorPassword(true)
+      return
+    }
     axios.post("http://localhost:3001/api/user/CreateNewUser", {
       username: fullName, password: password,
-      address: address, phone: phoneNumber, email: mile
+      address: address, phone: phoneNumber, email: email
     }).then((response) => {
-      console.log(response);
+      setMassageBakend(response.data.message)
+      console.log(response.data.message);
     }).catch((error) => {
       console.log(error);
     })
@@ -38,65 +64,76 @@ export const CreateNewUser = () => {
         </DivIcone>
         <Contend>
           <DivInpute>
-            <InputText
+            <InputName
+              errorName={errorName}
               type="text"
               placeholder="שם מלא"
               value={objForm.fullName}
               onChange={(e) => {
+                setMassageBakend('')
+
+                setErrorName(false)
                 setObjForm({ ...objForm, fullName: e.target.value });
               }}
-            ></InputText>
-            <InputText
+            ></InputName>
+            <InputAddress
+              errorAddress={errorAddress}
               type="text"
               placeholder="כתובת"
               value={objForm.address}
               onChange={(e) => {
+                setMassageBakend('')
+                setErrorAddress(false)
                 setObjForm({ ...objForm, address: e.target.value });
               }}
-            ></InputText>
+            ></InputAddress>
           </DivInpute>
 
           <DivInpute>
-            <InputText
-              type="text"
+            <InputPhoneNumber
+              errorPhone={errorPhone}
+              type="number"
               placeholder="מספר טלפון"
               value={objForm.phoneNumber}
               onChange={(e) => {
+                setMassageBakend('')
+                setErrorPhone(false)
                 setObjForm({ ...objForm, phoneNumber: e.target.value });
               }}
-            ></InputText>
-            <InputText
-              type="text"
-              placeholder="מייל"
-              value={objForm.mile}
-              onChange={(e) => {
-                setObjForm({ ...objForm, mile: e.target.value });
-              }}
-            ></InputText>
-          </DivInpute>
-
-          <DivInpute>
-            <InputText
+            ></InputPhoneNumber>
+            <InputPassword
+              errorPassword={errorPassword}
               type="text"
               placeholder="סיסמא"
               value={objForm.password}
               onChange={(e) => {
+                setMassageBakend('')
+                setErrorPassword(false)
                 setObjForm({ ...objForm, password: e.target.value });
               }}
-            ></InputText>
-            <InputText
-              type="text"
-              placeholder="אולי עוד משהו"
-              value={objForm.fullName}
-              onChange={(e) => {
-                setObjForm({ ...objForm, fullName: e.target.value });
-              }}
-            ></InputText>
+            ></InputPassword>
           </DivInpute>
+
+
+
+          <InputEmail
+            errorEmail={errorEmail}
+            id='email'
+            type="text"
+            placeholder="מייל"
+            value={objForm.email}
+            onChange={(e) => {
+              setMassageBakend('')
+              setErrorEmail(false)
+              setObjForm({ ...objForm, email: e.target.value });
+            }}
+          ></InputEmail>
+
         </Contend>
         <FooterButton>
           <ButtonClick onClick={registerUser}>הרשם</ButtonClick>
-          {errorText && <ErrorText>שגיאה</ErrorText>}
+          <ErrorText>{massageBakend}</ErrorText>
+          {/* {errorText && <ErrorText>שגיאה</ErrorText>} */}
         </FooterButton>
       </DivBorder>
     </Body>
@@ -153,7 +190,8 @@ const Contend = styled.div`
   margin: 0 auto;
 `;
 
-const InputText = styled.input`
+
+const InputName = styled.input<{ errorName: boolean }>`
   width: 9rem;
   height: 2.5rem;
   font-size: 1.2rem;
@@ -161,7 +199,56 @@ const InputText = styled.input`
   border: none;
   border-radius: 15px;
   padding-right: 0.5rem;
+  border:${(props) => props.errorName ? '1px solid red' : ''};
 `;
+const InputAddress = styled.input<{ errorAddress: boolean }>`
+  width: 9rem;
+  height: 2.5rem;
+  font-size: 1.2rem;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  padding-right: 0.5rem;
+  border:${(props) => props.errorAddress ? ' 1px solid red' : ''};
+`;
+const InputPhoneNumber = styled.input<{ errorPhone: boolean }>`
+  width: 9rem;
+  height: 2.5rem;
+  font-size: 1.2rem;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  padding-right: 0.5rem;
+  border:${(props) => props.errorPhone ? ' 1px solid red' : ''};
+
+`;
+
+const InputEmail = styled.input<{ errorEmail: boolean }>`
+
+    width: 97%;
+    margin: 0 auto;
+    margin-top:0.5rem;
+  height: 2.5rem;
+  font-size:  1.2rem;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  border:${(props) => props.errorEmail ? ' 1px solid red' : ''};
+  
+`;
+const InputPassword = styled.input<{ errorPassword: boolean }>`
+  width: 9rem;
+  height: 2.5rem;
+  font-size: 1.2rem;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  padding-right: 0.5rem;
+  border:${(props) => props.errorPassword ? ' 1px solid red' : ''};
+  }
+`;
+
+
 
 const DivInpute = styled.div`
   display: flex;
