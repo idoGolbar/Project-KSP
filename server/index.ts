@@ -4,19 +4,40 @@ import User from "./routes/user";
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import { ConnectMongoOptions } from 'connect-mongo/build/main/lib/MongoStore';
 
 dotenv.config();
 
 
-mongoose.connect(process.env.DB_URL as string).then((status) => {
-    console.log("database connection established");
-}).catch((error) => {
-    console.log("database connection error", error);
-});
+// const connection = mongoose.createConnection(process.env.DB_URL as string);
 
 
 
 const app = express();
+// SESSIONS FOR AUTH
+
+// const sessionStore = new MongoStore({
+//     mongooseConnection: connection,
+//     collection: 'sessions',
+// })
+
+
+app.use(session({
+    secret: 'i love dogs',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.DB_URL
+    }),
+    cookie: {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}));
+
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 app.use('/api/user', User);
