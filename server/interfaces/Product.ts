@@ -9,6 +9,7 @@ export default interface IProduct {
     description: string;
     discountedPrice: string;
     category: string;
+    imageUrl: string;
     createdAt: Date,
     updatedAt: Date,
 }
