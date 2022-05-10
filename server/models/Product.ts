@@ -4,12 +4,15 @@ import IProduct from '../interfaces/Product';
 
 
 const ProductSchema = new Schema<IProduct>({
-    name: { type:String, required: true },
-    mkt: { type:String, required: false },
-    company: { type:String, required: true },
-    price: { type:String, required: true },
-    discountedPrice: { type:String, required: false },
-    Description: { type:String, required: true },
+    name: { type: String, required: true },
+    mkt: { type: String, required: false },
+    company: { type: String, required: true },
+    price: { type: String, required: true },
+    amount: { type: Number, required: false },
+    color: { type: String, required: true },
+    description: { type: String, required: true },
+    category: { type: String, required: true },
+    discountedPrice: { type: String, required: false },
 }, { timestamps: true })
 
 

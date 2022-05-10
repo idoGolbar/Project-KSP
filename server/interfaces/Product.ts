@@ -9,7 +9,6 @@ export default interface IProduct {
     description: string;
     discountedPrice: string;
     category: string;
-    Description: string,
     createdAt: Date,
     updatedAt: Date,
 }
