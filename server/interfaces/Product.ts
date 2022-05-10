@@ -4,8 +4,12 @@ export default interface IProduct {
     mkt: string;
     company: string;
     price: string;
+    amount: number;
+    color: string;
+    description: string;
     discountedPrice: string;
-    Description :string,
-    createdAt:Date,
-    updatedAt:Date,
+    category: string;
+    Description: string,
+    createdAt: Date,
+    updatedAt: Date,
 }
