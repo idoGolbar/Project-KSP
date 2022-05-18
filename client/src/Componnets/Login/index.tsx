@@ -16,7 +16,7 @@ export const Login = () => {
 
 
   const loginUser = () => {
-    axios.post('http://localhost:3001/api/user/login', { username: userName, password: userPassworde })
+    axios.post('http://localhost:3001/api/user/login', { username: userName, password: userPassworde }, { headers: { 'Content-Type': 'application/json', withCredentials: true } })
       .then(response => {
         setMassageBakend(response.data.message)
         console.log(response);
