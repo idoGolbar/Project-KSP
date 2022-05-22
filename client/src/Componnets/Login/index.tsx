@@ -72,7 +72,10 @@ export const Login = () => {
         </Content>
 
         <DivFotterButton>
-          <div id="newUserClik" onClick={() => navigate('/createNewUser')}>הרשמות מחדש</div>
+          <HelperButton>
+            <div id="newUserClik" onClick={() => navigate('/createNewUser')}>הרשמות מחדש</div>
+            <div id="forgotPassword" onClick={() => navigate('/forgotPassword')}>שכחתי סיסמא</div>
+          </HelperButton>
           <div
             id="buttonClik"
             onClick={() => {
@@ -100,6 +103,15 @@ export const Login = () => {
     </Body>
   );
 };
+
+const HelperButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* padding-top:1rem; */
+  /* height: 3rem; */
+`
 
 const Body = styled.div`
   width: 100%;
@@ -204,9 +216,14 @@ const DivFotterButton = styled.div`
     color: white;
   }
   #newUserClik {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     color: #5e5d5d;
   }
+  #forgotPassword{
+    margin-bottom: 1rem;
+    color: #5e5d5d;
+  }
+
 `;
 const TextError = styled.div`
   display: flex;

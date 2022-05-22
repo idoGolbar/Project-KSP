@@ -50,4 +50,34 @@ router.post('/CreateNewUser', async (req: Request, res: Response) => {
     }
 });
 
+router.post('/UpdateUser', async (req: Request, res: Response) => {
+    try { 
+        const {  password ,email } = req.body;
+                let hashPassword = bcrypt.hashSync(password, saltRounds);
+               await User.updateOne({email},{$set:{password:hashPassword}})
+                res.send( {success: true ,message: "success"})
+       }
+     catch (err) {
+        res.json({ success: false, message: "Something went wrong" }).status(500);
+    }
+});
+
+router.post('/FindingUser', async (req: Request, res: Response) => {
+    try { 
+        const { email } = req.body;
+              let user= await User.findOne({email})
+                if(user)
+                {
+                    res.send( {success: true , message: "success"})
+                }
+                res.send( {success: true , message: "לא נמצא משתמש"})
+               
+       }
+     catch (err) {
+        res.json({ success: false, message: "Something went wrong" }).status(500);
+    }
+});
+
+
+
 export default router;

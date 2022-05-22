@@ -7,6 +7,7 @@ import { NavBar } from "./Componnets/NavBar";
 import { Exsmpel } from "./Componnets/Exsmpel";
 import { BrowserRouter as Router, Routes } from "react-router-dom";
 import { Route } from "react-router";
+import { ForgotPassword } from "./Componnets/ForgotPassword";
 function App() {
   return (
     <Router>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Login />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/createNewUser" element={<CreateNewUser />}></Route>
+        <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/Exsmpel" element={<Exsmpel />}></Route>
         {/* <Route path="/Exsmpel/:id" element={<Exsmpel />}></Route> */}
       </Routes>
