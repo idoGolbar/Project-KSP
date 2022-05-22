@@ -55,7 +55,7 @@ router.post('/UpdateUser', async (req: Request, res: Response) => {
         const {  password ,email } = req.body;
                 let hashPassword = bcrypt.hashSync(password, saltRounds);
                await User.updateOne({email},{$set:{password:hashPassword}})
-                res.send( {success: true})
+                res.send( {success: true ,message: "success"})
        }
      catch (err) {
         res.json({ success: false, message: "Something went wrong" }).status(500);
