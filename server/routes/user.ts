@@ -1,5 +1,5 @@
 
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import { checkUserPassword } from "../helpers/validatePassword";
@@ -23,6 +23,32 @@ const createToken = (userId: string) => {
 
 const router = Router();
 const saltRounds = 10;
+
+const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies.jwt;
+    const userId = req.body.id;
+
+    // check json web token exists & is verified
+    if (token) {
+        jwt.verify(token, userId, (err: any, decodedToken: any) => {
+            if (err) {
+                console.log(err.message);
+                res.redirect('/login');
+            } else {
+                console.log(decodedToken);
+                next();
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
+};
+
+// Temporary route
+router.get('/adminAccess', requireAuth, (req: Request, res: Response) => {
+    res.send('Congrats you have access')
+})
+
 
 router.post('/login', async (req: Request, res: Response) => {
     try {
