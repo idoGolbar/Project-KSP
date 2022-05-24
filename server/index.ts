@@ -6,6 +6,8 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 import { ConnectMongoOptions } from 'connect-mongo/build/main/lib/MongoStore';
 
 dotenv.config();
@@ -20,32 +22,13 @@ const connection = mongoose.connect(process.env.DB_URL as string).then(() => {
 
 
 const app = express();
-// SESSIONS FOR AUTH
-
-// const sessionStore = new MongoStore({
-//     mongooseConnection: connection,
-//     collection: 'sessions',
-// })
 
 
-app.use(session({
-    secret: 'i love dogs',
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-        mongoUrl: process.env.DB_URL
-    }),
-    cookie: {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24
-    }
-}));
-
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: ['http://localhost:3001', 'http://localhost:3000'], credentials: true }));
 app.use(bodyParser.json());
 app.use('/api/user', User);
-
 app.get('/', (req, res) => {
     res.send('This is a test web page!');
 })

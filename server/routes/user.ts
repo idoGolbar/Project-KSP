@@ -7,11 +7,18 @@ import { checkUser } from "../helpers/checkUser";
 import { ValidationEmailPhone } from '../helpers/ValidationEmailPhone';
 
 import session from 'express-session';
+import jwt from "jsonwebtoken";
 
 declare module 'express-session' {
     export interface SessionData {
         user: { [key: string]: any };
     }
+}
+
+const createToken = (userId: string) => {
+    return jwt.sign({ userId }, 'top secret 123456789', {
+        expiresIn: 60 * 60 * 60 * 24 * 1000
+    })
 }
 
 const router = Router();
@@ -20,11 +27,14 @@ const saltRounds = 10;
 router.post('/login', async (req: Request, res: Response) => {
     try {
         const { username, password } = req.body;
-        let findUser = await User.findOne({ username })
-        if (findUser && await checkUserPassword(password, findUser.password)) {
-            req.session.user = findUser;
-            console.log(req.session.user);
-            res.json({ success: true, message: "User login successful" });
+        let foundUser = await User.findOne({ username })
+        if (foundUser && await checkUserPassword(password, foundUser.password)) {
+            // req.session.user = foundUser;
+            const token = createToken(foundUser.id);
+            res.cookie('jwt', token, { maxAge: 60 * 60 * 1000 * 24 });
+            // res.setHeader('Access-Control-Allow-Origin', 'true');
+            res.status(200).send({ success: true, message: "User login successful", user: foundUser._id });
+            console.log(res);
         } else {
             res.json({ sucess: false, message: "User not found" });
         }
